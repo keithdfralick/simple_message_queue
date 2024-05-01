@@ -150,6 +150,7 @@ void vsmq_wipe(vSMQ q) {
     smq_wipe(q);
 }
 
+#ifdef ZOMBIE
 int main(void) {
     vSMQ q;
     int i;
@@ -173,8 +174,6 @@ int main(void) {
 
     vsmq_destroy(q);
 
-
-
-
     return 0;
 }
+#endif
