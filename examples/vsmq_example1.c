@@ -8,7 +8,7 @@
 ** This example reads/outputs /usr/share/dict/words. You may need to 
 ** install a package for this to work correctly.
 **
-** Compile: gcc smq.c vsmq.c -pthread -o vsmq_example1
+** Compile: gcc smq.c vsmq.c vsmq_example1.c -pthread -o vsmq_example1
 */
 #include "vsmq.h"
 
