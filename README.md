@@ -46,9 +46,25 @@ into the queue. Additional comments are in the file.ß
 
 Creates an SMQ create object. Returns NULL if unable to create the queue. 
 
-`int smq_send(SMQ, void *, int)`
-`int smq_recv(SMQ, void *, struct timeval *, int)`
-`int smq_get_count(SMQ)`
-`int smq_destroy(SMQ)`
-`void smq_wipe(SMQ)`
+`int smq_send(SMQ smq, void *data, int timeout_ms)`
+
+Sends a message to the queue. 
+* smq is the object previously created with smq_create and is the queue. 
+* Data is the data to copy into the queue and must be the size
+specified by the ``data_size'' argument to smq_create. 
+* Timeout_ms is the amount of time (in milliseconds) to wait for a write. 
+
+* If data is NULL, nothing will be written and error will be returned.
+* If timeout_ms is < 0, then wait will be unspecified (indefinite); if 
+timeout_ms is 0, then we will not wait for a write-ready state, we attempt
+a write only once cycle before failure. If timeout_ms is greater than 0, then
+we wait that specified amount of time in milliseconds for data to write-ready.
+
+Returns 0 on success and < 0 on failure (unable to write).
+
+`int smq_recv(SMQ smq, void *data, struct timeval *tv, int tmimeout_ms)`
+
+`int smq_get_count(SMQ smq)`
+`int smq_destroy(SMQ smq)`
+`void smq_wipe(SMQ smq)`
 
