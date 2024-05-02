@@ -177,3 +177,25 @@ Same as smq_get_count
 `void vsmq_wipe(vSMQ`)
 
 Same as smq_wipe
+<br><br>
+
+## Extended and/or Unsupported items
+
+As this code is primarily a simple implementation of queues, there are a number
+of items which are unsupported or don't exist. In some worlds, we may consider
+these a "TODO," but there is no plan to implement these features in this
+repo.
+
+* All items in the queue are assumed to have the same priority and, as such, 
+there is no prioritization to queue items. For example, there is no concept
+of ``high'' or ``low'' priority items. Having this feature will also imped
+the performance of the queue overall, which may be mitigated depending upon
+how it is implemented. The simple implementation offers excellent overall
+raw performance. Both writes and reads essentially operate at O(1).
+
+* There is no functionality for merging queues, splitting queues, or copying
+queues.
+
+* Each queue must have a queue object assigned and must be tracked through
+some other means. There is no concept of a ``list of queues'' and, as such,
+queues cannot be named or numbered.
