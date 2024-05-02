@@ -59,17 +59,16 @@ is specified, no callback is performed.
 
 Returns the SMQ object if successful, otherwise NULL is returned.
 
-
+<br><br>
 `int smq_send(SMQ smq, void *data, int timeout_ms)`
 
 Sends a message to the queue. 
 * smq is the object previously created with smq_create and is the queue. 
 * Data is the data to copy into the queue and must be the size
-specified by the ``data_size'' argument to smq_create. 
-* Timeout_ms is the amount of time (in milliseconds) to wait for a write. 
-
-* If data is NULL, nothing will be written and error will be returned.
-* If timeout_ms is < 0, then wait will be unspecified (indefinite); if 
+specified by the ``data_size'' argument to smq_create. If data is NULL, nothing will
+be written and error will be returned.
+* Timeout_ms is the amount of time (in milliseconds) to wait for a write. If
+timeout_ms is < 0, then wait will be unspecified (indefinite); if 
 timeout_ms is 0, then we will not wait for a write-ready state, we attempt
 a write only once cycle before failure. If timeout_ms is greater than 0, then
 we wait that specified amount of time in milliseconds for data to write-ready.
@@ -81,4 +80,3 @@ Returns 0 on success and < 0 on failure (unable to write).
 `int smq_get_count(SMQ smq)`
 `int smq_destroy(SMQ smq)`
 `void smq_wipe(SMQ smq)`
-
