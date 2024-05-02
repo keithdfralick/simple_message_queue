@@ -42,9 +42,23 @@ into the queue. Additional comments are in the file.ß
 
 ### Public Functions (SMQ)
 
-`SMQ smq_create(int max_queue_size, int data_size, void (*onfree_callback)(void *))`
+`SMQ smq_create(int data_size, int max_queue_size, void (*onfree_callback)(void *))`
 
-Creates an SMQ create object. Returns NULL if unable to create the queue. 
+Creates an SMQ create object. 
+
+* The ``data_size`` is the size of each element written and read from the queue. A
+data_size of less than or equal to 0 will result in NULL being returned.
+* The ``max_queue_size'' is the maximum number of items which can exist in the queue.
+Once this value is reached, then smq_send will block (wait state) for the queue's
+readers to remove items, until the queue size is below ``max_queue_size''. 
+If ``max_queue_size'' is <= 0, then the queue will be virtually unlimited (except
+by memory).
+* The ``onfree_callback'' is a function which is called on destroy or wipe for any 
+item should additional memory need to be freed or addressed in some way. If NULL
+is specified, no callback is performed.
+
+Returns the SMQ object if successful, otherwise NULL is returned.
+
 
 `int smq_send(SMQ smq, void *data, int timeout_ms)`
 

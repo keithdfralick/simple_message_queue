@@ -322,6 +322,10 @@ static void _smq_wipe(SMQ q) {
 SMQ smq_create(int len, int max_count, void (*onfree)(void *)) {
     SMQ q;
 
+    /* data length must be something */
+    if (len <= 0)
+        return NULL;
+
     if (!(q = calloc(1, sizeof(*q))))
         return NULL;
     q->len = len;
