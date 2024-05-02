@@ -86,5 +86,8 @@ int main(void) {
     for (i = 0; i < READ_THREADS; i++)
         pthread_join(tids[i], NULL);
 
+    /* destroy */
+    vsmq_destroy(queue);
+
     return 0;
 }

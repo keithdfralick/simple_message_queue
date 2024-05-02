@@ -113,7 +113,6 @@ int vsmq_send(vSMQ q, void *data, int sz, int timeout_ms) {
 */
 void *vsmq_recv(vSMQ q, int *sz, int timeout_ms) {
     vSMQ_WRAP wrap;
-    void *p;
 
     /* No data available */
     if (!(smq_recv(q, &wrap, NULL, timeout_ms)))

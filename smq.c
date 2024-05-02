@@ -51,6 +51,7 @@ static double gettime_dbl(void) {
     return tv2dbl(&tv);
 }
 
+#ifdef INCLUDE_DB2TV
 /*
 ** dbl2tv()
 **
@@ -62,6 +63,7 @@ static int dbl2tv(struct timeval *tv, double t) {
     tv->tv_usec = (suseconds_t) ((t - (double)tv->tv_sec) * 1000000);
     return 0;
 }
+#endif
 
 /*
 ** dbl2timespec()
@@ -233,17 +235,6 @@ static int _smq_signal(SMQ q, int signal_type) {
 ** the writability to become available.
 */
 static int _smq_link(SMQ q, SMQItem item, int ms) {
-    struct timespec abstime, *_abstime = NULL;
-
-    /*
-    ** If ms is greater than 0, then we expire. Calculate the time
-    ** of expiration (timeout time)
-    */
-    if (ms > 0) {
-        _smq_timeout_time(&abstime, ms);
-        _abstime = &abstime;
-    }
-
     /* lock the mutex */
     _smq_lock(q);
 
