@@ -165,6 +165,7 @@ Receives a message from the queue.
 
 <br><br>
 `int vsmq_destroy(vSMQ)`
+
 Same as smq_destroy
 
 <br><br>
