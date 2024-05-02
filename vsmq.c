@@ -148,31 +148,3 @@ int vsmq_get_count(vSMQ q) {
 void vsmq_wipe(vSMQ q) {
     smq_wipe(q);
 }
-
-#ifdef ZOMBIE
-int main(void) {
-    vSMQ q;
-    int i;
-    char *p;
-
-    if (!(q = vsmq_create(-1))) {
-        fprintf(stderr, "Unable to create a queue\n");
-        return -1;
-    }
-
-    for (i = 0; i < 1000000; i++)
-        vsmq_send(q, "Keith", 5, 10);
-
-    printf("COUNT: %d\n", vsmq_get_count(q));
-
-    while ((p = vsmq_recv(q, NULL, 10)))
-        free (p);
-
-    //puts(vsmq_recv(q, NULL));
-    
-
-    vsmq_destroy(q);
-
-    return 0;
-}
-#endif
