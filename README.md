@@ -130,9 +130,40 @@ The functions provided by vSMQ are essentially the same as those provided by SMQ
 and vSMQ is essentially an extension/wrapper around SMQ which allows one to use
 greater flexibility with their size payloads.
 
-`vSMQ vsmq_create(int)`
-`int vsmq_send(vSMQ q, void *, int, int)`
-`void *vsmq_recv(vSMQ, int *, int)`
+`vSMQ vsmq_create(int max_queue_size)`
+
+Create a vSMQ object. The vSMQ object is an alias to SMQ, but with special settings
+pre-defined. 
+
+* The max_queue_size is the maximum size of the queue. Works as that from smq_create.
+
+<br><br>
+`int vsmq_send(vSMQ q, void *data, int dsize, int timeout_ms)`
+
+Sends a message to the queue.
+
+* q is the vSMQ created previously by vsmq_create.
+* data is the data to write into the queue.
+* dsize is the length of the data being written to the queue 
+* timeout_ms is the wait-for-send time and works as smq_send.
+
+<br><br>
+`void *vsmq_recv(vSMQ q, int *dsize, int timeout_ms)`
+
+Receives a message from the queue.
+
+* q is the vSMQ object (queue)
+* dsize will have written the size of the data previously written from vsmq_send.
+If dsize is NULL, no size data will be written, but an error will also not occur.
+* timeout_ms is the time to wait to receive data and works like smq_recv.
+
+Returns a pointer to the memory previously copied into the queue. NULL is returned
+if nothing is available. This memory *must* be freed using `free()`.
+
+Receives a message from the queue.
+* vsmq is object created by vsmq_create()
+
+<br><br>
 `int vsmq_destroy(vSMQ)`
 Same as smq_destroy
 
