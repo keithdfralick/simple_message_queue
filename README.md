@@ -40,7 +40,13 @@ Pushes words from /usr/share/dict/words into a queue and is read
 by thread processes. Uses the vSMQ wrappers to simply write a string
 into the queue. Additional comments are in the file.ß
 
-### Public Functions (SMQ)
+## Public Functions (SMQ)
+
+The following are the 6 functions made available by this code base. 4 of the
+6 would be commonly used with the other two less so. It would be uncommon
+to use wipe or get_count, but these are available regardless.
+
+<br><br>
 
 `SMQ smq_create(int data_size, int max_queue_size, void (*onfree_callback)(void *))`
 
@@ -116,3 +122,26 @@ Removes all items currently in the queue, but the queue itself remains available
 * smq is the object created by smq_create
 
 Returns nothing as-is void. All items are dropped/purged.
+
+<br><br>
+## Public Functions (vSMQ)
+
+The functions provided by vSMQ are essentially the same as those provided by SMQ 
+and vSMQ is essentially an extension/wrapper around SMQ which allows one to use
+greater flexibility with their size payloads.
+
+`vSMQ vsmq_create(int)`
+`int vsmq_send(vSMQ q, void *, int, int)`
+`void *vsmq_recv(vSMQ, int *, int)`
+`int vsmq_destroy(vSMQ)`
+Same as smq_destroy
+
+<br><br>
+`int vsmq_get_count(vSMQ)`
+
+Same as smq_get_count
+
+<br><br>
+`void vsmq_wipe(vSMQ`)
+
+Same as smq_wipe
