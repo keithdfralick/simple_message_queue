@@ -75,8 +75,44 @@ we wait that specified amount of time in milliseconds for data to write-ready.
 
 Returns 0 on success and < 0 on failure (unable to write).
 
-`int smq_recv(SMQ smq, void *data, struct timeval *tv, int tmimeout_ms)`
+<br><br>
+`int smq_recv(SMQ smq, void *data, struct timeval *tv, int timeout_ms)`
 
+Receives a message from the queue (consumer).
+* smq is the object previously created with smq_create.
+* data is the data to copy from the queue into the address pointed to by data, whose
+size will be that defined from smq_create.
+* tv will be copied and is the time the message was received (timestamp). If
+tv is NULL, this will not result in error, but the timestamp will not be copied.
+* timeout_ms is the number of milliseconds to wait for data to become available. 
+If timeout_ms is < 0, then we will wait an indefinite amount of time. If timeout_ms
+is 0, then we will attempt to read the data, but only once; we will not wait for
+new data to become available. If timeout_ms is greater than 0, then we wait that
+period of time (in milliseconds) for new data to become available.
+
+Returns non-zero on receipt of data or 0 if no data is available.
+
+<br><br>
 `int smq_get_count(SMQ smq)`
+
+Get the count of the number of items in the queue.
+* smq is the object created earlier by smq_create.
+
+Returns the number of items currently in the queue.
+
+<br><br>
 `int smq_destroy(SMQ smq)`
+
+Destroy and free all items in the queue. The object is freed along with every item
+being removed. Mutexes and Condition variables are also destroyed.
+* smq is the object created earlier by smq_create
+
+Returns 0 at the moment.
+
+<br><br>
 `void smq_wipe(SMQ smq)`
+
+Removes all items currently in the queue, but the queue itself remains available.
+* smq is the object created by smq_create
+
+Returns nothing as-is void. All items are dropped/purged.
